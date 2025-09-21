@@ -1,6 +1,8 @@
 # Dog Breed Viewer
 
-A single-page React app for browsing dog breeds and viewing three random images per breed. Built with TypeScript, Zustand, Tailwind CSS, and Vite.
+A single-page React app for browsing dog breeds and viewing three random images per breed.
+_Note: The Dog CEO API currently returns 404 Not Found for the African breed images (e.g., https://dog.ceo/api/breed/african/images/random and https://images.dog.ceo/breeds/african/n02116738_6117.jpg)._
+Built with TypeScript, Zustand, Tailwind CSS, and Vite.
 
 ## Live Demo
 
