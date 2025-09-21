@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { useDogStore } from './store/dogStore';
+import { BreedSelector } from './components/BreedSelector';
+import { ImageGrid } from './components/ImageGrid';
 
 function App() {
   const { fetchBreeds, breedsStatus, selectedBreed } = useDogStore();
@@ -49,51 +51,14 @@ function App() {
               <h2 className="text-base sm:text-lg font-medium text-white mb-4">
                 Select a Breed
               </h2>
-              {/* Breed selector component will go here */}
-              <div className="text-center text-gray-400 py-6 sm:py-8">
-                <div className="text-3xl sm:text-4xl mb-2">🔍</div>
-                <p className="text-sm sm:text-base">Breed selector coming soon...</p>
-              </div>
+              <BreedSelector />
             </div>
           </aside>
 
           {/* Main Content Area - Images */}
           <section className="lg:col-span-8 xl:col-span-9">
             <div className="bg-gray-800 rounded-lg shadow-lg border border-gray-700 p-4 sm:p-6">
-              {!selectedBreed ? (
-                // Welcome state
-                <div className="text-center py-12 sm:py-16">
-                  <div className="text-4xl sm:text-6xl mb-4">🐾</div>
-                  <h3 className="text-lg sm:text-xl font-medium text-white mb-2">
-                    Welcome to Dog Breed Viewer
-                  </h3>
-                  <p className="text-gray-300 max-w-md mx-auto text-sm sm:text-base px-4">
-                    Select a dog breed from the sidebar to view beautiful photos 
-                    of that breed. Discover over 100 different dog breeds!
-                  </p>
-                </div>
-              ) : (
-                // Selected breed content
-                <div>
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-2 sm:space-y-0">
-                    <h3 className="text-lg sm:text-xl font-medium text-white capitalize">
-                      {selectedBreed} Photos
-                    </h3>
-                    <button 
-                      className="text-sm text-blue-400 hover:text-blue-300 font-medium self-start sm:self-auto"
-                      onClick={() => {/* Refresh images logic will go here */}}
-                    >
-                      Refresh Images
-                    </button>
-                  </div>
-                  
-                  {/* Image grid component will go here */}
-                  <div className="text-center text-gray-400 py-6 sm:py-8">
-                    <div className="text-3xl sm:text-4xl mb-2">📸</div>
-                    <p className="text-sm sm:text-base">Image grid coming soon...</p>
-                  </div>
-                </div>
-              )}
+              <ImageGrid />
             </div>
           </section>
         </div>
