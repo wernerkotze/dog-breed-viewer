@@ -14,6 +14,9 @@ export const useDogStore = create<DogStore>((set, get) => ({
   imagesStatus: 'idle',
   imagesError: null,
   
+  // Track breeds with image issues
+  breedsWithImageIssues: new Set<string>(),
+  
   // Actions
   fetchBreeds: async () => {
     const state = get();
@@ -106,5 +109,11 @@ export const useDogStore = create<DogStore>((set, get) => ({
     if (state.selectedBreed) {
       await get().fetchImagesForBreed(state.selectedBreed);
     }
+  },
+  
+  markBreedWithImageIssues: (breed: string) => {
+    set((state) => ({
+      breedsWithImageIssues: new Set(state.breedsWithImageIssues).add(breed)
+    }));
   },
 }));

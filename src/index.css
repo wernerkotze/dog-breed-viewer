@@ -22,3 +22,11 @@ body {
 #root {
   min-height: 100vh;
 }
+
+/* Caveat font for headers */
+.caveat-header {
+  font-family: "Caveat", cursive;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}

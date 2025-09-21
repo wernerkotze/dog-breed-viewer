@@ -4,7 +4,7 @@ import { useDebounce } from '../hooks/useDebounce';
 import type { BreedSelectorProps } from '../types/dog';
 
 export function BreedSelector({ className = '' }: BreedSelectorProps) {
-  const { breeds, breedsStatus, breedsError, selectedBreed, setSelectedBreed, retryFetchBreeds } = useDogStore();
+  const { breeds, breedsStatus, breedsError, selectedBreed, setSelectedBreed, retryFetchBreeds, breedsWithImageIssues } = useDogStore();
   const [searchTerm, setSearchTerm] = useState('');
   
   // Debounce search term with 200ms delay
@@ -36,7 +36,6 @@ export function BreedSelector({ className = '' }: BreedSelectorProps) {
     return (
       <div className={`${className}`}>
         <div className="text-center py-8">
-          <div className="text-4xl mb-3">⚠️</div>
           <h3 className="text-lg font-medium text-white mb-2">Failed to Load Breeds</h3>
           <p className="text-gray-400 text-sm mb-4">{breedsError}</p>
           <button
@@ -101,24 +100,43 @@ export function BreedSelector({ className = '' }: BreedSelectorProps) {
           <div className="max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
             {filteredBreeds.length === 0 ? (
               <div className="text-center py-8">
-                <div className="text-3xl mb-2">🔍</div>
                 <p className="text-gray-400 text-sm">No breeds found</p>
               </div>
             ) : (
               <div className="space-y-1">
-                {filteredBreeds.map((breed) => (
-                  <button
-                    key={breed}
-                    onClick={() => handleBreedSelect(breed)}
-                    className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                      selectedBreed === breed
-                        ? 'bg-blue-600 text-white'
-                        : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                    }`}
-                  >
-                    <span className="capitalize">{breed}</span>
-                  </button>
-                ))}
+                {filteredBreeds.map((breed) => {
+                  const hasImageIssues = breedsWithImageIssues.has(breed);
+                  
+                  return (
+                    <div key={breed} className="relative group">
+                      <button
+                        onClick={() => handleBreedSelect(breed)}
+                        className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center justify-between ${
+                          selectedBreed === breed
+                            ? 'bg-blue-600 text-white'
+                            : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                        }`}
+                      >
+                        <span className="capitalize">{breed}</span>
+                        {hasImageIssues && (
+                          <span className="text-yellow-400 text-xs" title="Some images may not load">
+                            ⚠️
+                          </span>
+                        )}
+                      </button>
+                      
+                      {/* Tooltip */}
+                      {hasImageIssues && (
+                        <div className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
+                          <div className="bg-gray-900 text-white text-xs rounded px-2 py-1 whitespace-nowrap border border-gray-600">
+                            Some images may not load properly
+                            <div className="absolute right-full top-1/2 transform -translate-y-1/2 border-4 border-transparent border-r-gray-900"></div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>

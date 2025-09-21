@@ -22,12 +22,16 @@ export interface DogStore {
   imagesStatus: 'idle' | 'loading' | 'success' | 'error';
   imagesError: string | null;
   
+  // Track breeds with image issues
+  breedsWithImageIssues: Set<string>;
+  
   // Actions
   fetchBreeds: () => Promise<void>;
   setSelectedBreed: (breed: string | null) => void;
   fetchImagesForBreed: (breed: string) => Promise<void>;
   retryFetchBreeds: () => Promise<void>;
   retryFetchImages: () => Promise<void>;
+  markBreedWithImageIssues: (breed: string) => void;
 }
 
 // HTTP utility types
