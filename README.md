@@ -6,6 +6,10 @@ A single-page React app for browsing dog breeds and viewing three random images 
 
 https://dog-breed-viewer.vercel.app/
 
+## Demo
+
+![App demo](./app-demo.gif)
+
 ## Features
 
 - Fetch and display all breeds on load
